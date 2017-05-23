@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>加载更多</title>
+  <style type="text/css">
+
+  	ul,li {
+  	  list-style: none;
+  	  padding: 0;
+  	}
+    a {
+      text-decoration: none;
+    }
+  	li {
+  	 display: block;
+  	 margin: 10px auto;
+  	 border: 1px solid #ccc;
+  	 padding: 5px;
+     text-align: center;
+  	 /*
+     width: 600px;
+  	 height: 30px;
+  	 box-sizing: border-box;
+  	 */
+  	}
+  	.ct li:hover {
+  	  background-color: green;
+  	  cursor: pointer;
+  	}
+  	.btn {
+  	  cursor: pointer;
+  	  width: 100px;
+  	  height: 40px;
+  	  border-radius: 3px;
+  	  font-size: 16px;
+  	  margin: 20px auto;
+  	  display: block;
+  	  outline: none;
+  	}
+  	.btn:hover {
+  	  background-color: pink;
+  	  color: green;
+  	}
+  </style>
+</head>
+<body>
+  <ul class="ct"></ul>
+  <button class="btn">加载更多</button>
+
+  <script src='jquery/jquery-3.2.1.min.js'></script>
+  <script type="text/javascript">
+    var $ct = $('.ct')
+    var $btn = $('.btn')
+    var lock = true
+    var index = 0
+
+    $btn.on('click',function(){
+      if (!lock) {
+        return
+      }
+      $.ajax({
+        url:'/loadMore',
+        type:'get',
+        dataType:'json',
+        data:{
+          index:index,
+          length:3
+        },
+        success:function(ret){
+          if (ret.status == '0') {
+            console.log('1')  
+            $.each(ret.data,function(idx,prod){
+              var htmls = '<li><a href="#">'+prod+'</a></li>'
+              $ct.append(htmls)
+              index++
+            })
+          } else {
+            console.log('2')
+          }
+          lock = true
+        },
+        error:function(){
+          console.log('出错了')
+        }, 
+      })
+      lock = false
+      // function appendHtml(data){
+      //   var htmls = '<li><a href="#">'+ret.data[]+'</a></li>'
+      // }
+      
+    })
+
+
+
+    
+  </script>
+</body>
+</html>

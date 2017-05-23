@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jQuery操作</title>
+  <style type="text/css">
+    #btn {
+      width: 50px;
+      padding: 10px;
+      margin: 10px auto;
+      background-color: blue;
+      outline: none;
+      display: block;
+    }
+    .scroll {
+      width: 100px;
+      height: 500px;
+      margin: 10px auto;
+      border: 1px solid red;
+    }
+    input,select {
+      display: block;
+      margin: 10px auto;
+    }
+    p {
+      text-align: center;
+      background-color: green;
+      width: 300px;
+      height: 50px;
+      margin: 10px auto;
+    } 
+
+  </style>
+</head>
+<body>
+  <button id="btn">点我变色</button>
+  <div class="scroll"></div>
+  <input type="text" name="username" placeholder="请输入英文字母">
+<!--   <input type="checkbox" name="hangz" value="杭州" checked="checked">杭州
+  <input type="checkbox" name="beij" value="北京">北京
+  <input type="checkbox" name="shangh" value="上海">上海
+  <input type="text" name="city" value="杭州" checked="checked">杭州
+  <input type="radio" name="city" value="北京">北京
+  <input type="radio" name="city" value="上海">上海 -->
+  <select name="city">
+    <option value="杭州" selected="selected">杭州</option>
+    <option value="北京">北京</option>
+    <option value="上海">上海</option>
+  </select>
+  <P></P>
+
+  <script src="C:\Users\Administrator\Desktop\JS\jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+    var $btn = $('#btn')
+    var $scroll = $('.scroll')
+    var change = [{'background-color':'red'},{'background-color':'blue'}]
+    $btn.on('click',function(){
+      $btn.css('background-color','red')
+      setTimeout(function(){
+        $btn.css('background-color','blue')
+      },500)
+      // console.log('1')
+      // $btn.animate(change[0],300) 注意，只有数字才能创建动画
+      // $btn.animate(change[1],300)
+    })
+    $(window).on('scroll',function(){
+      var scrollText = $(window).scrollTop()
+      $scroll.text('垂直滚动距离为：'+scrollText+'px')
+    })
+    $('div').on('mouseenter',function(){
+      //$('div').css('background-color','red')
+      $('div').attr('style','background-color:red')
+    })
+    $('div').on('mouseleave',function(){
+      $('div').attr('style','background-color:white')
+      //$('div').css('background-color','white')
+    })
+    $('input').on('focus',function(){
+      $('input').css('outline-color','blue')
+    })
+    $('input').on('keyup',function(){
+      $('input').val($('input').val().toUpperCase())
+      
+    })
+    $('input').on('focusout',function(){
+      $('input').css('outline-color','none')
+      console.log($('input').val())
+    })
+    // $('select').on('change',function(){
+    //   var $select = $('select option:selected').text()
+    //   $('p').text($select)
+    // })
+    $('select').change(function(){
+      var $select = $('select option:selected').text()
+      $('p').text('您选择的城市为：'+$select)
+    })
+
+   
+  </script>
+</body>
+</html>
